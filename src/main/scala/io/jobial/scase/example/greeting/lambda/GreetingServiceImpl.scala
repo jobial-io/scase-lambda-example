@@ -17,11 +17,9 @@ import io.jobial.scase.aws.lambda.IOLambdaRequestHandler
 import io.jobial.scase.core._
 
 
-class GreetingServiceLambdaRequestHandler
+object GreetingServiceLambdaRequestHandler
   extends IOLambdaRequestHandler[GreetingRequest[_ <: GreetingResponse], GreetingResponse]
     with GreetingServiceLambdaConfig {
-  
-  println(serviceConfiguration.requestUnmarshaller)
 
   def handleRequest(implicit context: RequestContext[IO]) = {
     case m: Hello =>

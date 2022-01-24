@@ -12,11 +12,16 @@
  */
 package io.jobial.scase.example.greeting.lambda
 
-import io.jobial.scase.cloudformation.{CloudformationStack, StackContext}
+import cats.effect.IO
+import io.jobial.sclap.CommandLineApp
 
-object GreetingServiceStack extends CloudformationStack with GreetingServiceLambdaConfig {
+import scala.concurrent.ExecutionContext.Implicits.global
 
-  def template(implicit context: StackContext) =
-    lambda(GreetingServiceLambdaRequestHandler)
+object GreetingLambdaClient extends CommandLineApp with GreetingServiceLambdaConfig {
 
+  def run =
+    for {
+      client <- serviceConfiguration.client[IO]
+      helloResponse <- client ? Hello("world")
+    } yield println(helloResponse.sayingHello)
 }
