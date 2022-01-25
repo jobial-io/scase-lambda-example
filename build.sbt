@@ -45,27 +45,27 @@ lazy val root: Project = project
   .in(file("."))
   .settings(commonSettings)
   .enablePlugins(SbtProguard)
-  //.enablePlugins(SbtScaseCloudformationPlugin)
+  .enablePlugins(SbtScaseCloudformationPlugin)
   .settings(
-    //cloudformationStackClass := "io.jobial.scase.example.greeting.lambda.GreetingServiceLambdaRequestHandler",
+    cloudformationStackClass := "io.jobial.scase.example.greeting.lambda.GreetingServiceStack$",
     libraryDependencies ++= Seq(
-      //      "io.jobial" %% "scase-cloudformation" % "0.3.0",
       "io.jobial" %% "scase-cloudformation" % ScaseVersion,
       "io.jobial" %% "scase-aws" % ScaseVersion exclude("commons-logging", "commons-logging-api"),
       "io.jobial" %% "scase-circe" % ScaseVersion exclude("commons-logging", "commons-logging-api"),
     ),
-    proguardOptions in Proguard ++= Seq("-dontobfuscate", "-dontoptimize", 
+    proguardOptions in Proguard ++= Seq(
+      "-dontobfuscate", "-dontoptimize", "-dontnote", "-ignorewarnings",
+      "-keep", "class", "io.jobial.scase.example.greeting.lambda.GreetingServiceLambdaRequestHandler", "{", "*;", "}",
       "-keepclassmembers", "class", "io.jobial.scase.example.greeting.lambda.GreetingServiceLambdaRequestHandler", "{", "*;", "}",
       "-keepclassmembers", "class", "io.jobial.scase.aws.lambda.LambdaRequestHandler", "{", "*;", "}",
       "-keep", "class", "com.amazonaws.services.**", "{", "*;", "}",
       "-keep", "class", "scala.Symbol", "{", "*;", "}",
-      "-dontnote", "-ignorewarnings"),
+    ),
     proguardInputFilter in Proguard := { file =>
       file.name match {
         case _ => Some("!META-INF/**,!about.html,!org/apache/commons/logging/**")
       }
     },
-    proguardOptions in Proguard += ProguardOptions.keepMain("io.jobial.scase.example.greeting.lambda.GreetingServiceLambdaRequestHandler"),
-    javaOptions in (Proguard, proguard) := Seq("-Xmx2G")
+    javaOptions in(Proguard, proguard) := Seq("-Xmx2G")
   )
 

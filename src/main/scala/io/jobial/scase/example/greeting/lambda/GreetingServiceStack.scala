@@ -17,6 +17,6 @@ import io.jobial.scase.cloudformation.{CloudformationStack, StackContext}
 object GreetingServiceStack extends CloudformationStack with GreetingServiceLambdaConfig {
 
   def template(implicit context: StackContext) =
-    lambda(new GreetingServiceLambdaRequestHandler, memorySize = Some(256))
-
+    lambda(new GreetingServiceLambdaRequestHandler)
+  
 }
