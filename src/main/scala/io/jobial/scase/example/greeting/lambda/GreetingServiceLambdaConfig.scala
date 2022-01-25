@@ -19,5 +19,5 @@ import io.jobial.scase.marshalling.circe._
 trait GreetingServiceLambdaConfig {
 
   val serviceConfiguration =
-    LambdaRequestResponseServiceConfiguration[GreetingRequest[_ <: GreetingResponse], GreetingResponse]("greeting")
+    LambdaRequestResponseServiceConfiguration[GreetingRequest[_ <: GreetingResponse], GreetingResponse]("GreetingService")
 }
