@@ -12,7 +12,7 @@
  */
 package io.jobial.scase.example.greeting.lambda
 
-import io.jobial.scase.cloudformation.{CloudformationStack, StackContext}
+import io.jobial.condense.{CloudformationStack, StackContext}
 
 object GreetingServiceStack extends CloudformationStack with GreetingServiceLambdaConfig {
 

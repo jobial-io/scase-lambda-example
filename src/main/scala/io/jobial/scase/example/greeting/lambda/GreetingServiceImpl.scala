@@ -20,8 +20,6 @@ import io.jobial.scase.core._
 class GreetingServiceLambdaRequestHandler
   extends IOLambdaRequestHandler[GreetingRequest[_ <: GreetingResponse], GreetingResponse]
     with GreetingServiceLambdaConfig {
-  
-  println(serviceConfiguration.requestUnmarshaller)
 
   def handleRequest(implicit context: RequestContext[IO]) = {
     case m: Hello =>

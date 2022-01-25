@@ -17,14 +17,13 @@ ThisBuild / scalaVersion := "2.12.13"
 ThisBuild / crossScalaVersions := Seq("2.11.12", "2.12.13", "2.13.6")
 ThisBuild / version := "0.3.0"
 ThisBuild / scalacOptions += "-target:jvm-1.8"
-ThisBuild / publishArtifact in(Test, packageBin) := true
-ThisBuild / publishArtifact in(Test, packageSrc) := true
-ThisBuild / publishArtifact in(Test, packageDoc) := true
+ThisBuild / Test / packageBin / publishArtifact := true
+ThisBuild / Test / packageSrc / publishArtifact := true
+ThisBuild / Test / packageDoc / publishArtifact := true
 
 import com.lightbend.sbt.SbtProguard.autoImport.proguardOptions
 import sbt.Keys.{description, libraryDependencies, publishConfiguration}
-import sbt.{addCompilerPlugin, addSbtPlugin}
-import sbtassembly.AssemblyPlugin.autoImport.{ShadeRule, assemblyPackageScala}
+import sbt.addCompilerPlugin
 import xerial.sbt.Sonatype._
 
 lazy val commonSettings = Seq(
@@ -45,15 +44,14 @@ lazy val root: Project = project
   .in(file("."))
   .settings(commonSettings)
   .enablePlugins(SbtProguard)
-  .enablePlugins(SbtScaseCloudformationPlugin)
   .settings(
     cloudformationStackClass := "io.jobial.scase.example.greeting.lambda.GreetingServiceStack$",
     libraryDependencies ++= Seq(
-      "io.jobial" %% "scase-cloudformation" % ScaseVersion,
+      "io.jobial" %% "condense" % ScaseVersion,
       "io.jobial" %% "scase-aws" % ScaseVersion exclude("commons-logging", "commons-logging-api"),
       "io.jobial" %% "scase-circe" % ScaseVersion exclude("commons-logging", "commons-logging-api"),
     ),
-    proguardOptions in Proguard ++= Seq(
+    Proguard / proguardOptions ++= Seq(
       "-dontobfuscate", "-dontoptimize", "-dontnote", "-ignorewarnings",
       "-keep", "class", "io.jobial.scase.example.greeting.lambda.GreetingServiceLambdaRequestHandler", "{", "*;", "}",
       "-keepclassmembers", "class", "io.jobial.scase.example.greeting.lambda.GreetingServiceLambdaRequestHandler", "{", "*;", "}",
@@ -61,11 +59,11 @@ lazy val root: Project = project
       "-keep", "class", "com.amazonaws.services.**", "{", "*;", "}",
       "-keep", "class", "scala.Symbol", "{", "*;", "}",
     ),
-    proguardInputFilter in Proguard := { file =>
+    Proguard / proguardInputFilter := { file =>
       file.name match {
         case _ => Some("!META-INF/**,!about.html,!org/apache/commons/logging/**")
       }
     },
-    javaOptions in(Proguard, proguard) := Seq("-Xmx2G")
+    Proguard /  proguard / javaOptions := Seq("-Xmx2G")
   )
 
