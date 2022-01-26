@@ -48,7 +48,7 @@ lazy val root: Project = project
     cloudformationStackClass := "io.jobial.scase.example.greeting.lambda.GreetingServiceStack$",
     libraryDependencies ++= Seq(
       "io.jobial" %% "condense" % ScaseVersion,
-      "io.jobial" %% "scase-aws" % ScaseVersion exclude("commons-logging", "commons-logging-api"),
+      "io.jobial" %% "scase-aws" % ScaseVersion % "compile->compile;test->test" exclude("commons-logging", "commons-logging-api"),
       "io.jobial" %% "scase-circe" % ScaseVersion exclude("commons-logging", "commons-logging-api"),
     ),
     Proguard / proguardOptions ++= Seq(
