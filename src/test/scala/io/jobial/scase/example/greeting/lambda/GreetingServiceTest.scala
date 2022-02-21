@@ -12,9 +12,12 @@
  */
 package io.jobial.scase.example.greeting.lambda
 
+import cats.Eq
 import io.jobial.scase.aws.lambda.LambdaRequestHandlerTestSupport
 
 class GreetingServiceTest extends LambdaRequestHandlerTestSupport with GreetingServiceLambdaConfig {
+
+  implicit val eqGreetingResponse: Eq[GreetingResponse] = Eq.fromUniversalEquals
 
   "sending a hello" should "reply" in {
     testLambdaHandler(new GreetingServiceLambdaRequestHandler, Hello("world"), HelloResponse("Hello, world!"))
