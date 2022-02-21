@@ -1,0 +1,11 @@
+image:
+  name: public.ecr.aws/e7v6a8o5/cloudtemp/sbt-build:latest
+
+pipelines:
+  default:
+    - step:
+       script:
+         - build-with-sbt
+
+options:
+  max-time: 30
