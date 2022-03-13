@@ -23,7 +23,7 @@ class GreetingServiceLambdaRequestHandler
 
   def handleRequest(implicit context: RequestContext[IO]) = {
     case m: Hello =>
-      m ! HelloResponse(s"Hello, ${m.person}!")
+      m ! HelloResponse(s"Hello, ${m.person}")
     case m: Hi =>
       for {
         _ <- IO(println(s"processing request $m..."))
