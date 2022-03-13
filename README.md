@@ -12,7 +12,7 @@ To run the client and invoke the function:
 sbt "runMain io.jobial.scase.example.greeting.lambda.GreetingLambdaClient"
 ```
 
-You can also call the function on the AWS Dashboard.
+You can also call the function on the AWS Dashboard or using any other client.
 
 
 
