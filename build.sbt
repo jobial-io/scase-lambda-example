@@ -21,6 +21,7 @@ ThisBuild / javacOptions ++= Seq("-source", "11", "-target", "11")
 ThisBuild / Test / packageBin / publishArtifact := true
 ThisBuild / Test / packageSrc / publishArtifact := true
 ThisBuild / Test / packageDoc / publishArtifact := true
+Proguard / proguardVersion := "7.2.2"
 
 import com.lightbend.sbt.SbtProguard.autoImport.proguardOptions
 import sbt.Keys.{description, libraryDependencies, publishConfiguration}
@@ -66,6 +67,6 @@ lazy val root: Project = project
         case _ => Some("!META-INF/**,!about.html,!org/apache/commons/logging/**")
       }
     },
-    Proguard /  proguard / javaOptions := Seq("-Xmx2G")
+    Proguard / proguard / javaOptions := Seq("-Xmx2G")
   )
 
