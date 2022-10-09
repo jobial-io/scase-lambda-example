@@ -15,13 +15,12 @@ name := "scase-lambda-example"
 ThisBuild / organization := "io.jobial"
 ThisBuild / scalaVersion := "2.13.6"
 ThisBuild / crossScalaVersions := Seq("2.11.12", "2.12.13", "2.13.6")
-ThisBuild / version := "0.5.3"
+ThisBuild / version := "0.5.4"
 ThisBuild / scalacOptions += "-target:jvm-1.8"
 ThisBuild / javacOptions ++= Seq("-source", "11", "-target", "11")
 ThisBuild / Test / packageBin / publishArtifact := true
 ThisBuild / Test / packageSrc / publishArtifact := true
 ThisBuild / Test / packageDoc / publishArtifact := true
-Proguard / proguardVersion := "7.2.2"
 
 import com.lightbend.sbt.SbtProguard.autoImport.proguardOptions
 import sbt.Keys.{description, libraryDependencies, publishConfiguration}
@@ -40,7 +39,7 @@ lazy val commonSettings = Seq(
   addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
 )
 
-lazy val ScaseVersion = "0.5.3"
+lazy val ScaseVersion = "0.5.4"
 
 lazy val root: Project = project
   .in(file("."))
@@ -56,17 +55,17 @@ lazy val root: Project = project
     ),
     Proguard / proguardOptions ++= Seq(
       "-dontobfuscate", "-dontoptimize", "-dontnote", "-ignorewarnings",
-      "-keep", "class", "io.jobial.scase.example.greeting.lambda.GreetingServiceLambdaRequestHandler", "{", "*;", "}",
-      "-keepclassmembers", "class", "io.jobial.scase.example.greeting.lambda.GreetingServiceLambdaRequestHandler", "{", "*;", "}",
-      "-keepclassmembers", "class", "io.jobial.scase.aws.lambda.LambdaRequestHandler", "{", "*;", "}",
-      "-keep", "class", "com.amazonaws.services.**", "{", "*;", "}",
-      "-keep", "class", "scala.Symbol", "{", "*;", "}",
+      "-keep class io.jobial.scase.example.greeting.lambda.** {*;}",
+      "-keepclassmembers class io.jobial.scase.aws.lambda.LambdaRequestHandler {*;}",
+      "-keep class com.amazonaws.services.lambda.** {*;}",
+      "-keep class scala.Symbol {*;}"
     ),
     Proguard / proguardInputFilter := { file =>
       file.name match {
         case _ => Some("!META-INF/**,!about.html,!org/apache/commons/logging/**")
       }
     },
-    Proguard / proguard / javaOptions := Seq("-Xmx2G")
+    Proguard / proguard / javaOptions := Seq("-Xmx2G"),
+    Proguard / proguardVersion := "7.2.2"
   )
 
