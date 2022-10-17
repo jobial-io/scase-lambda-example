@@ -15,7 +15,7 @@ name := "scase-lambda-example"
 ThisBuild / organization := "io.jobial"
 ThisBuild / scalaVersion := "2.13.6"
 ThisBuild / crossScalaVersions := Seq("2.11.12", "2.12.13", "2.13.6")
-ThisBuild / version := "0.5.4"
+ThisBuild / version := "0.6.0"
 ThisBuild / scalacOptions += "-target:jvm-1.8"
 ThisBuild / javacOptions ++= Seq("-source", "11", "-target", "11")
 ThisBuild / Test / packageBin / publishArtifact := true
@@ -39,7 +39,7 @@ lazy val commonSettings = Seq(
   addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
 )
 
-lazy val ScaseVersion = "0.5.4"
+lazy val ScaseVersion = "0.6.0"
 
 lazy val root: Project = project
   .in(file("."))
