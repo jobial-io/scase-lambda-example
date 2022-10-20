@@ -13,11 +13,10 @@
 package io.jobial.scase.example.greeting.lambda
 
 import io.circe.generic.auto._
-import io.jobial.scase.aws.lambda.LambdaServiceConfiguration
+import io.jobial.scase.aws.lambda.LambdaServiceConfiguration.requestResponse
 import io.jobial.scase.marshalling.circe._
 
 trait GreetingServiceLambdaConfig {
 
-  val serviceConfiguration =
-    LambdaServiceConfiguration[GreetingRequest[_ <: GreetingResponse], GreetingResponse]("GreetingService")
+  val serviceConfiguration = requestResponse[GreetingRequest[_ <: GreetingResponse], GreetingResponse]("GreetingService")
 }
